@@ -147,8 +147,13 @@ class Transport:
     elif resp in [b'ok', b'e1', b'e2']:       # response without data
       return (None, resp)
     else:
-      # strip first byte (i.e. cmd byte)
-      return (resp[1:], self._read_response(timeout))
+      rc = self._read_response(timeout)
+      if rc != b'ok':
+        raise RuntimeError("command failed")
+      else:
+        # strip first byte (i.e. cmd byte from data)
+        return (resp[1:], rc)
+
 
   # --- set colors   ---------------------------------------------------------
 
