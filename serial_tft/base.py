@@ -13,7 +13,7 @@
 
 import time
 
-from .commands import (WRITE_READ_BAUD, RESET, FILL_SCREEN, SET_TEXTCOLOR,
+from .commands import (WRITE_READ_BAUD, RESET, TEST, FILL_SCREEN, SET_TEXTCOLOR,
                        SET_READ_CURSOR)
 
 _START_BYTE = b'\x7E'
@@ -43,6 +43,12 @@ class Transport:
       self._debug = lambda msg: print(msg)
     else:
       self._debug = lambda msg: None
+
+    # on POR, wait for the display
+    while True:
+      _, resp = self.command(TEST)
+      if resp == b'ok':
+        break
 
     if reset:
       _, resp = self.command(RESET)
@@ -128,6 +134,7 @@ class Transport:
     com_bytes.extend(_END_BYTE)
     # send command
     self._debug(f"command: {com_bytes.hex()}")
+    self._uart.reset_input_buffer()
     self._uart.write(com_bytes)
     
     # read response data/code: either (None,code) or (data,code)
