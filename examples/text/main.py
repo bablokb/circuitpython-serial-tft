@@ -49,8 +49,10 @@ print("query cursor: ", end="")
 pos = texts.get_cursor()
 print(f"{pos}")
 
-print("set cursor to (0,pos[1]+20):")
-texts.set_cursor(0,pos[1]+20)
+tsize = texts.get_textsize("Hello world")
+print(f"size of 'Hello world': ({tsize[0]},{tsize[1]})")
+print(f"set cursor to (0,{pos[1]+tsize[1]+1}):")
+texts.set_cursor(0,pos[1]+tsize[1]+1)
 pos = texts.get_cursor()
 print(f"current position: {pos}")
 

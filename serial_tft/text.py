@@ -49,6 +49,14 @@ class Text:
     self._t.command(SET_TEXTSIZE,scale)
     self._text_scale = scale
 
+  # --- get text dimensions   ------------------------------------------------
+
+  def get_textsize(self, text:int):
+    """ get text dimensions (width,height) """
+
+    # for scale==1, charsize is 5x7. Add one pixel between chars for width
+    return (self._text_scale*len(text)*5 + (len(text)-1), self._text_scale*7)
+
   # --- print text at current position   -------------------------------------
 
   def print(self, text:str):
