@@ -120,7 +120,7 @@ class Transport:
     # convert data to bytes
     if isinstance(data,list):
       data = bytearray(b''.join([self._to_bytes(x) for x in data]))
-    elif data:
+    elif not data is None:
       data = self._to_bytes(data)
     data_len = len(data) + 2 if data else 2
 
