@@ -43,3 +43,11 @@ class Screen:
   def clear(self):
     """ clear screen """
     self._t.command(FILL_SCREEN,self.bg_color)
+
+  # --- set rotation   -------------------------------------------------------
+
+  def set_rotation(self,rot:int):
+    """ set screen rotation """
+
+    # map: 0: no rot, 1: 90, 2: 180, 3: 270
+    self._t.command(SET_ROTATION,(rot+90)//90)

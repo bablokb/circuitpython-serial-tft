@@ -38,7 +38,10 @@ if DEBUG:
 
 texts = Text(ser,reset=True,debug=DEBUG)
 screen = Screen()
+print("clear screen")
 screen.clear()
+print("set rotation to 0")
+screen.set_rotation(0)
 print("display initialized")
 print(f"current position: {texts.get_cursor()}")
 
