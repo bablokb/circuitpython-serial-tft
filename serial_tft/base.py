@@ -11,15 +11,15 @@
 
 """ Serial TFT driver library """
 
-import time
-
-from .commands import (WRITE_READ_BAUD, RESET, TEST, FILL_SCREEN, SET_TEXTCOLOR,
-                       SET_READ_CURSOR)
-
+TEST = b'\x00'
+RESET = b'\x05'
+WRITE_READ_BAUD = b'\x40'
+SET_READ_CURSOR = b'\x01'
 _START_BYTE = b'\x7E'
 _END_BYTE = b'\xEF'
-
 _BAUD = [9600, 19200, 38400, 57600, 115200]
+
+import time
 
 class Transport:
   """ Serial-TFT driver """
@@ -28,15 +28,17 @@ class Transport:
 
   # --- constructor   --------------------------------------------------------
 
-  def __new__(cls, uart, reset, baudrate, fg_color, bg_color, clear, debug):
+  def __new__(cls, uart, reset, baudrate, debug):
     if Transport._transport:
       return Transport._transport
     return super(Transport,cls).__new__(cls)
 
-  def __init__(self, uart, reset, baudrate, fg_color, bg_color, clear, debug):
+  def __init__(self, uart, reset, baudrate, debug):
     """ constructor """
     if Transport._transport:
       return
+    else:
+      Transport._transport = self
     self._uart = uart
 
     if debug:
@@ -55,10 +57,6 @@ class Transport:
       if resp not in [b'ok', b'e1']:
         raise RuntimeError("could not reset TFT")
 
-    # set colors and clear screen
-    self.set_colors(fg_color, bg_color)
-    if clear:
-      self.clear()
     if baudrate:
       self.baudrate = baudrate
 
@@ -126,12 +124,14 @@ class Transport:
       data = self._to_bytes(data)
     data_len = len(data) + 2 if data else 2
 
+    # create complete command-sequence
     com_bytes = bytearray(_START_BYTE) 
     com_bytes.extend(self._to_bytes(data_len))
     com_bytes.extend(cmd)
     if data:
       com_bytes.extend(data)
     com_bytes.extend(_END_BYTE)
+
     # send command
     self._debug(f"command: {com_bytes.hex()}")
     self._uart.reset_input_buffer()
@@ -155,16 +155,3 @@ class Transport:
         return (resp[1:], rc)
 
 
-  # --- set colors   ---------------------------------------------------------
-
-  def set_colors(self, fg_color=0xFFFF, bg_color=0x0000):
-    """ set colors """
-    self.fg_color = [fg_color>>8, fg_color & 0xFF]
-    self.bg_color = [bg_color>>8, bg_color & 0xFF]
-    self.command(SET_TEXTCOLOR,self.fg_color)
-
-  # --- clear screen (fill with bg_color)   ----------------------------------
-  
-  def clear(self):
-    """ clear screen """
-    self.command(FILL_SCREEN,self.bg_color)

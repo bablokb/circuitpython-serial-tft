@@ -30,33 +30,36 @@ except:
     ser = busio.UART(board.GP0, board.GP1, baudrate=9600)
 
 from serial_tft.text import Text
+from serial_tft.screen import Screen
 
 # wait for the console to connect
 if DEBUG:
   time.sleep(5)
 
-tft = Text(ser,reset=True,debug=DEBUG)
+texts = Text(ser,reset=True,debug=DEBUG)
+screen = Screen()
+screen.clear()
 print("display initialized")
-print(f"current position: {tft.get_cursor()}")
+print(f"current position: {texts.get_cursor()}")
 
 print("sending 'Hello world'")
-tft.print("Hello world")
+texts.print("Hello world")
 
 print("query cursor: ", end="")
-pos = tft.get_cursor()
+pos = texts.get_cursor()
 print(f"{pos}")
 
 print("set cursor to (0,pos[1]+20):")
-tft.set_cursor(0,pos[1]+20)
-pos = tft.get_cursor()
+texts.set_cursor(0,pos[1]+20)
+pos = texts.get_cursor()
 print(f"current position: {pos}")
 
 print("scaling text-size")
-tft.set_textsize(4)
+texts.set_textsize(4)
 
 print("sending 'Hello world'")
-tft.print("Hello world")
+texts.print("Hello world")
 
 print("query cursor: ", end="")
-pos = tft.get_cursor()
+pos = texts.get_cursor()
 print(f"{pos}")

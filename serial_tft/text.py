@@ -1,5 +1,7 @@
 # ----------------------------------------------------------------------------
-# Command Subset for Texts for the OpenSmart 2.4" Serial-TFT
+# Driver for the OpenSmart 2.4" Serial-TFT
+#
+# Command subset for output of texts.
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -9,7 +11,10 @@
 
 """ Serial TFT driver library (text commands) """
 
-from .commands import SET_READ_CURSOR, SET_TEXTSIZE, PRINT_CHAR_ARRAY
+SET_READ_CURSOR = b'\x01'
+SET_TEXTSIZE = b'\x03'
+PRINT_CHAR_ARRAY = b'\x11'
+
 from .base import Transport
 
 class Text:
@@ -17,17 +22,10 @@ class Text:
 
   # --- constructor   --------------------------------------------------------
 
-  def __init__(self, uart=None, reset=True, baudrate=None,
-               fg_color=0xFFFF, bg_color=0x0000, clear=True, debug=False):
+  def __init__(self, uart=None, reset=True, baudrate=None, debug=False):
     """ constructor """
 
-    self._t = Transport(uart,reset,baudrate,fg_color,bg_color,clear,debug)
-
-  # --- set colors   ---------------------------------------------------------
-
-  def set_colors(self, fg_color=0xFFFF, bg_color=0x0000):
-    """ set colors """
-    self._t.set_colors(fg_color, bg_color)
+    self._t = Transport(uart,reset,baudrate,debug)
 
   # --- query current cursor position   --------------------------------------
 
