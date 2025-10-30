@@ -26,6 +26,7 @@ class Text:
     """ constructor """
 
     self._t = Transport(uart,reset,baudrate,debug)
+    self._text_scale = 2
 
   # --- query current cursor position   --------------------------------------
 
@@ -46,6 +47,7 @@ class Text:
   def set_textsize(self, scale:int):
     """ set textsize """
     self._t.command(SET_TEXTSIZE,scale)
+    self._text_scale = scale
 
   # --- print text at current position   -------------------------------------
 
