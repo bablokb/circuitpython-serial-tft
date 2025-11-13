@@ -51,3 +51,11 @@ class Screen:
 
     # map: 0: no rot, 1: 90, 2: 180, 3: 270
     self._t.command(SET_ROTATION,(rot+90)//90)
+
+  # --- set brightness   -----------------------------------------------------
+
+  def set_brightness(self,b:float):
+    """ set screen brightness """
+
+    # brightness is 0-1
+    self._t.command(SET_BACKLIGHT,int(b*255))
