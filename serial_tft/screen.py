@@ -32,11 +32,13 @@ class Screen:
 
   # --- set colors   ---------------------------------------------------------
 
-  def set_colors(self, fg_color=0xFFFF, bg_color=0x0000):
+  def set_colors(self, fg_color=None, bg_color=None):
     """ set colors """
-    self.fg_color = [fg_color>>8, fg_color & 0xFF]
-    self.bg_color = [bg_color>>8, bg_color & 0xFF]
-    self._t.command(SET_TEXTCOLOR,self.fg_color)
+    if not bg_color is None:
+      self.bg_color = [bg_color>>8, bg_color & 0xFF]
+    if not fg_color is None:
+      self.fg_color = [fg_color>>8, fg_color & 0xFF]
+      self._t.command(SET_TEXTCOLOR,self.fg_color)
 
   # --- clear screen (fill with bg_color)   ----------------------------------
   
