@@ -31,6 +31,7 @@ except:
 
 from serial_tft.text import Text
 from serial_tft.screen import Screen
+from serial_tft.colors import RED
 
 # wait for the console to connect
 if DEBUG:
@@ -62,9 +63,13 @@ print(f"current position: {pos}")
 print("scaling text-size")
 texts.set_textsize(4)
 
-print("sending 'Hello world'")
+print("sending 'Hello world' in red")
+screen.set_colors(fg_color=RED)
 texts.print("Hello world")
 
 print("query cursor: ", end="")
 pos = texts.get_cursor()
 print(f"{pos}")
+
+time.sleep(5)
+screen.set_brightness(0.1)
