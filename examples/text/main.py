@@ -44,20 +44,20 @@ screen.clear()
 print("set rotation to 0")
 screen.set_rotation(0)
 print("display initialized")
-print(f"current position: {texts.get_cursor()}")
+print(f"current position: {screen.get_position()}")
 
 print("sending 'Hello world'")
 texts.print("Hello world")
 
 print("query cursor: ", end="")
-pos = texts.get_cursor()
+pos = screen.get_position()
 print(f"{pos}")
 
 tsize = texts.get_textsize("Hello world")
 print(f"size of 'Hello world': ({tsize[0]},{tsize[1]})")
 print(f"set cursor to (0,{pos[1]+tsize[1]+1}):")
-texts.set_cursor(0,pos[1]+tsize[1]+1)
-pos = texts.get_cursor()
+screen.set_position(0,pos[1]+tsize[1]+1)
+pos = screen.get_position()
 print(f"current position: {pos}")
 
 print("scaling text-size")
@@ -68,7 +68,7 @@ screen.set_colors(fg_color=RED)
 texts.print("Hello world")
 
 print("query cursor: ", end="")
-pos = texts.get_cursor()
+pos = screen.get_position()
 print(f"{pos}")
 
 time.sleep(5)

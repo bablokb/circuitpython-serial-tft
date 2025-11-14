@@ -13,6 +13,7 @@
 
 SET_TEXTCOLOR = b'\x02'
 FILL_SCREEN = b'\x20'
+SET_READ_CURSOR = b'\x01'
 SET_ROTATION = b'\x04'
 SET_BACKLIGHT = b'\x06'
 
@@ -45,6 +46,20 @@ class Screen:
   def clear(self):
     """ clear screen """
     self._t.command(FILL_SCREEN,self.bg_color)
+
+  # --- query current cursor position   --------------------------------------
+
+  def get_position(self):
+    """ query cursor position """
+    (data,rc) = self._t.command(SET_READ_CURSOR)
+    # data four bytes with: xH xL yH yL
+    return (256*int(data[0])+int(data[1]),256*int(data[2])+int(data[3]))
+                                
+  # --- set cursor position   ------------------------------------------------
+
+  def set_position(self, x:int, y:int):
+    """ set cursor position """
+    self._t.command(SET_READ_CURSOR,[x>>8, x&0xFF, y>>8, y&0xFF])
 
   # --- set rotation   -------------------------------------------------------
 
