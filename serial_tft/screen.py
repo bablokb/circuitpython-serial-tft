@@ -36,16 +36,16 @@ class Screen:
   def set_colors(self, fg_color=None, bg_color=None):
     """ set colors """
     if not bg_color is None:
-      self.bg_color = [bg_color>>8, bg_color & 0xFF]
+      self._t.bg_color = [bg_color>>8, bg_color & 0xFF]
     if not fg_color is None:
-      self.fg_color = [fg_color>>8, fg_color & 0xFF]
-      self._t.command(SET_TEXTCOLOR,self.fg_color)
+      self._t.fg_color = [fg_color>>8, fg_color & 0xFF]
+      self._t.command(SET_TEXTCOLOR,self._t.fg_color)
 
   # --- clear screen (fill with bg_color)   ----------------------------------
   
   def clear(self):
     """ clear screen """
-    self._t.command(FILL_SCREEN,self.bg_color)
+    self._t.command(FILL_SCREEN,self._t.bg_color)
 
   # --- query current cursor position   --------------------------------------
 
