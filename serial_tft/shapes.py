@@ -45,7 +45,8 @@ class Shapes:
     else:
       color = self._t.fg_color
     x,y = p
-    self._t.command(DRAW_PIXEL,[x>>8, x&0xFF, y>>8, y&0xFF, *color])
+    self._t.command(DRAW_PIXEL,[x>>8, x&0xFF, y>>8, y&0xFF,
+                                color[0], color[1]])
 
   # --- draw vertical line   -------------------------------------------------
 
@@ -57,7 +58,8 @@ class Shapes:
       color = self._t.fg_color
     x,y = p
     self._t.command(DRAW_FASTVLINE,
-                    [x>>8, x&0xFF, y>>8, y&0xFF, h>>8, h&0xFF, *color])
+                    [x>>8, x&0xFF, y>>8, y&0xFF, h>>8, h&0xFF,
+                     color[0], color[1]])
 
   # --- draw horizontal line   -----------------------------------------------
 
@@ -69,7 +71,8 @@ class Shapes:
       color = self._t.fg_color
     x,y = p
     self._t.command(DRAW_FASTHLINE,
-                    [x>>8, x&0xFF, y>>8, y&0xFF, w>>8, w&0xFF, *color])
+                    [x>>8, x&0xFF, y>>8, y&0xFF, w>>8, w&0xFF,
+                     color[0], color[1]])
 
   # --- draw line   ----------------------------------------------------------
 
@@ -84,7 +87,7 @@ class Shapes:
     self._t.command(DRAW_LINE,
                     [x0>>8, x0&0xFF, y0>>8, y0&0xFF,
                      x1>>8, x1&0xFF, y1>>8, y1&0xFF,
-                     *color])
+                     color[0], color[1]])
 
   # --- draw rectangle   -----------------------------------------------------
 
@@ -122,7 +125,8 @@ class Shapes:
     else:
       cmd = DRAW_CIRCLE
     x,y = p
-    self._t.command(cmd, [x>>8, x&0xFF, y>>8, y&0xFF, r>>8, r&0xFF, *color])
+    self._t.command(cmd, [x>>8, x&0xFF, y>>8, y&0xFF, r>>8, r&0xFF,
+                          color[0], color[1]])
 
   # --- draw triangle   ------------------------------------------------------
 
