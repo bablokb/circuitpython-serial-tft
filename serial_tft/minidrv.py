@@ -89,9 +89,13 @@ def init(uart):
 
 # --- clear screen   ---------------------------------------------------------
 
-def clear(uart):
+def clear(uart, color=None):
   """ clear display """
-  _send(uart,b'\x7e\x04\x20\x00\x00\xef')
+  cmd = bytearray(b'\x7e\x04\x20\x00\x00\xef')
+  if color:
+    cmd[3] = color >> 8
+    cmd[4] = color & 0xFF
+  _send(uart,cmd)
 
 # --- set brightness   -----------------------------------------------------
 

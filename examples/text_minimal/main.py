@@ -28,18 +28,19 @@ except:
     ser = busio.UART(board.GP0, board.GP1, baudrate=9600)
 
 from serial_tft import minidrv
-from serial_tft.colors import RED
+from serial_tft.colors import RED, BLACK, WHITE
 
 time.sleep(5)
 
 print("clear screen")
-minidrv.clear(ser)
+minidrv.clear(ser,WHITE)
 #print("set rotation to 0")
 #minidrev.set_rotation(ser,0)
 print("display initialized")
 
 print("scaling text-size")
 minidrv.textsize(ser,2)
+minidrv.textcolor(ser,BLACK)
 
 print("sending 'Hello world'")
 minidrv.text(ser,"Hello world")
