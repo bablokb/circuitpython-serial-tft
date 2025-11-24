@@ -140,7 +140,14 @@ def textcolor(uart, color):
 
 def position(uart, pos):
   """ set cursor position """
-  cmd = bytearray(b'\x7e\x06\x01')
-  cmd.extend([pos[0]>>8, pos[0]&0xFF, pos[1]>>8, pos[1]&0xFF])
+  cmd = bytearray(b'\x7e\x02\x01')
+  if pos:
+    cmd[1] = 6
+    cmd.extend([pos[0]>>8, pos[0]&0xFF, pos[1]>>8, pos[1]&0xFF])
   cmd.append(0xef)
-  _send(uart,cmd)
+  (data,rc) = _send(uart,cmd)
+  if not pos:
+    # query position
+    return (256*int(data[0])+int(data[1]),256*int(data[2])+int(data[3]))
+  else:
+    return

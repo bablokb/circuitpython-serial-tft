@@ -45,8 +45,9 @@ minidrv.textcolor(ser,BLACK)
 print("sending 'Hello world'")
 minidrv.text(ser,"Hello world")
 
-pos = (0,20)
-print(f"set cursor to (0,{pos}):")
+pos = minidrv.position(ser,None)
+pos = (0,pos[1]+15)               # assume text-size==2: 14 = 2*7
+print(f"set cursor to {pos}:")
 minidrv.position(ser,pos)
 
 print("scaling text-size")
