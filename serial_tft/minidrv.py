@@ -105,9 +105,26 @@ def text(uart, text):
   """ print text at given position """
   _send_str(uart, b'\x11', text)
 
+# --- set text size   ---------------------------------------------------------
+
+def textsize(uart, scale):
+  """ set textsize """
+  cmd = bytearray(b'\x7e\x03\x03\xFF\xef')
+  cmd[3] = scale
+  _send(uart,cmd)
+
+# --- set text size   ---------------------------------------------------------
+
+def textcolor(uart, color):
+  """ set textsize """
+  cmd = bytearray(b'\x7e\x04\x02\xFF\xFF\xef')
+  cmd[3] = color >> 8
+  cmd[4] = color & 0xFF
+  _send(uart,cmd)
+
 # --- set cursor position   --------------------------------------------------
 
-def set_position(uart, x:int, y:int):
+def position(uart, x:int, y:int):
   """ set cursor position """
   cmd = bytearray(b'\x7e\x06\x01')
   cmd.extend([x>>8, x&0xFF, y>>8, y&0xFF])

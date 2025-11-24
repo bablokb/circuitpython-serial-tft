@@ -28,6 +28,7 @@ except:
     ser = busio.UART(board.GP0, board.GP1, baudrate=9600)
 
 from serial_tft import minidrv
+from serial_tft.colors import RED
 
 time.sleep(5)
 
@@ -42,13 +43,13 @@ minidrv.text(ser,"Hello world")
 
 pos = (0,20)
 print(f"set cursor to (0,{pos}):")
-minidrv.set_position(ser,pos[0],pos[1])
+minidrv.position(ser,pos[0],pos[1])
 
-#print("scaling text-size")
-#minidrv.set_textsize(4)
+print("scaling text-size")
+minidrv.textsize(ser,4)
 
 print("sending 'Hello Blinka!'")
-#minidrv.set_colors(ser,fg_color=RED)
+minidrv.textcolor(ser,RED)
 minidrv.text(ser,"Hello Blinka!")
 
 time.sleep(5)
