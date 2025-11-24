@@ -138,9 +138,9 @@ def textcolor(uart, color):
 
 # --- set cursor position   --------------------------------------------------
 
-def position(uart, x:int, y:int):
+def position(uart, pos):
   """ set cursor position """
   cmd = bytearray(b'\x7e\x06\x01')
-  cmd.extend([x>>8, x&0xFF, y>>8, y&0xFF])
+  cmd.extend([pos[0]>>8, pos[0]&0xFF, pos[1]>>8, pos[1]&0xFF])
   cmd.append(0xef)
   _send(uart,cmd)

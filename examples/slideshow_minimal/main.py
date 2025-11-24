@@ -41,4 +41,4 @@ x = 0
 for f in ["1", "2", "3", "4"]:
   minidrv.draw(ser,f)
   x += 30
-  minidrv.set_position(ser,x,x)
+  minidrv.position(ser,(x,x))

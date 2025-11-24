@@ -47,7 +47,7 @@ minidrv.text(ser,"Hello world")
 
 pos = (0,20)
 print(f"set cursor to (0,{pos}):")
-minidrv.position(ser,pos[0],pos[1])
+minidrv.position(ser,pos)
 
 print("scaling text-size")
 minidrv.textsize(ser,4)
