@@ -11,11 +11,14 @@
 
 """ Serial TFT driver library (screen commands) """
 
+SET_TEXTSIZE = b'\x03'
+PRINT_CHAR_ARRAY = b'\x11'
 SET_TEXTCOLOR = b'\x02'
 FILL_SCREEN = b'\x20'
 SET_READ_CURSOR = b'\x01'
 SET_ROTATION = b'\x04'
 SET_BACKLIGHT = b'\x06'
+DRAW_BMP = b'\x30'
 
 from .base import Transport
 
@@ -29,6 +32,7 @@ class Screen:
     """ constructor """
 
     self._t = Transport(uart,reset,baudrate,debug)
+    self._text_scale = 2
     self.set_colors(fg_color,bg_color)
 
   # --- set colors   ---------------------------------------------------------
@@ -76,3 +80,30 @@ class Screen:
 
     # brightness is 0-1
     self._t.command(SET_BACKLIGHT,int(b*255))
+
+  # --- set text size   ------------------------------------------------------
+
+  def set_textsize(self, scale:int):
+    """ set textsize """
+    self._t.command(SET_TEXTSIZE,scale)
+    self._text_scale = scale
+
+  # --- get text dimensions   ------------------------------------------------
+
+  def get_textsize(self, text:int):
+    """ get text dimensions (width,height) """
+
+    # for scale==1, charsize is 5x7. Add one pixel between chars for width
+    return (self._text_scale*len(text)*5 + (len(text)-1), self._text_scale*7)
+
+  # --- print text at current position   -------------------------------------
+
+  def text(self, text:str):
+    """ print string at current position """
+    self._t.command(PRINT_CHAR_ARRAY,text)
+
+  # --- draw image   ---------------------------------------------------------
+
+  def draw(self, filename):
+    """ draw image at current position """
+    self._t.command(DRAW_BMP,filename)
