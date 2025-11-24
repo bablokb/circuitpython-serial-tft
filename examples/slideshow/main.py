@@ -30,7 +30,6 @@ except:
     ser = busio.UART(board.GP0, board.GP1, baudrate=9600)
 
 from serial_tft.screen import Screen
-from serial_tft.image import Image
 
 # wait for the console to connect
 if DEBUG:
