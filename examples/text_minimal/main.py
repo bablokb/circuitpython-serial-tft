@@ -38,7 +38,7 @@ minidrv.clear(ser)
 print("display initialized")
 
 print("sending 'Hello world'")
-minidrv.print_text(ser,"Hello world")
+minidrv.text(ser,"Hello world")
 
 pos = (0,20)
 print(f"set cursor to (0,{pos}):")
@@ -49,7 +49,7 @@ minidrv.set_position(ser,pos[0],pos[1])
 
 print("sending 'Hello Blinka!'")
 #minidrv.set_colors(ser,fg_color=RED)
-minidrv.print_text(ser,"Hello Blinka!")
+minidrv.text(ser,"Hello Blinka!")
 
 time.sleep(5)
 #minidrv.set_brightness(ser,0.1)

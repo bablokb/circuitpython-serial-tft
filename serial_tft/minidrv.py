@@ -101,7 +101,7 @@ def draw(uart, filename):
 
 # --- print text   -----------------------------------------------------------
 
-def print_text(uart, text):
+def text(uart, text):
   """ print text at given position """
   _send_str(uart, b'\x11', text)
 
