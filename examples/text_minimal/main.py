@@ -38,6 +38,9 @@ minidrv.clear(ser)
 #minidrev.set_rotation(ser,0)
 print("display initialized")
 
+print("scaling text-size")
+minidrv.textsize(ser,2)
+
 print("sending 'Hello world'")
 minidrv.text(ser,"Hello world")
 
@@ -53,4 +56,4 @@ minidrv.textcolor(ser,RED)
 minidrv.text(ser,"Hello Blinka!")
 
 time.sleep(5)
-#minidrv.set_brightness(ser,0.1)
+minidrv.set_brightness(ser,0.1)

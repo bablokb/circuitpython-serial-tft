@@ -93,6 +93,16 @@ def clear(uart):
   """ clear display """
   _send(uart,b'\x7e\x04\x20\x00\x00\xef')
 
+# --- set brightness   -----------------------------------------------------
+
+def set_brightness(uart,b:float):
+  """ set screen brightness """
+
+  # brightness is 0-1
+  cmd = bytearray(b'\x7e\x03\x06\xFF\xef')
+  cmd[3] = int(b*255)
+  _send(uart,cmd)
+
 # --- draw image   -----------------------------------------------------------
 
 def draw(uart, filename):
