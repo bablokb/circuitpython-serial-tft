@@ -29,7 +29,6 @@ except:
     # assume Pico
     ser = busio.UART(board.GP0, board.GP1, baudrate=9600)
 
-from serial_tft.text import Text
 from serial_tft.screen import Screen
 from serial_tft.colors import RED
 
@@ -37,8 +36,7 @@ from serial_tft.colors import RED
 if DEBUG:
   time.sleep(5)
 
-texts = Text(ser,reset=True,debug=DEBUG)
-screen = Screen()
+screen = Screen(ser,reset=True,debug=DEBUG)
 print("clear screen")
 screen.clear()
 print("set rotation to 0")
@@ -47,13 +45,13 @@ print("display initialized")
 print(f"current position: {screen.get_position()}")
 
 print("sending 'Hello world'")
-texts.print("Hello world")
+screen.text("Hello world")
 
 print("query cursor: ", end="")
 pos = screen.get_position()
 print(f"{pos}")
 
-tsize = texts.get_textsize("Hello world")
+tsize = screen.get_textsize("Hello world")
 print(f"size of 'Hello world': ({tsize[0]},{tsize[1]})")
 print(f"set cursor to (0,{pos[1]+tsize[1]+1}):")
 screen.set_position(0,pos[1]+tsize[1]+1)
@@ -61,11 +59,11 @@ pos = screen.get_position()
 print(f"current position: {pos}")
 
 print("scaling text-size")
-texts.set_textsize(4)
+screen.set_textsize(4)
 
 print("sending 'Hello world' in red")
 screen.set_colors(fg_color=RED)
-texts.print("Hello world")
+screen.text("Hello world")
 
 print("query cursor: ", end="")
 pos = screen.get_position()

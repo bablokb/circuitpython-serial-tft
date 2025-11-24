@@ -37,7 +37,6 @@ if DEBUG:
   time.sleep(5)
 
 screen = Screen(ser,reset=True,debug=DEBUG)
-image = Image()
 print("clear screen")
 screen.clear()
 #print("set rotation to 0")
@@ -46,6 +45,6 @@ print("display initialized")
 
 x = 0
 for f in ["1", "2", "3", "4"]:
-  image.draw(f)
+  screen.draw(f)
   x += 30
   screen.set_position(x,x)
