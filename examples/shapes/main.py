@@ -41,7 +41,7 @@ screen = Screen(ser,reset=True,debug=DEBUG)
 shapes = Shapes()
 print("clear screen")
 screen.clear()
-screen.set_brightness(1.0)
+screen.brightness(1.0)
 print("display initialized")
 
 print("centered pixel in yellow")

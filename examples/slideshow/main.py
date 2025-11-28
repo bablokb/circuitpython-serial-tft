@@ -46,4 +46,4 @@ x = 0
 for f in ["1", "2", "3", "4"]:
   screen.draw(f)
   x += 30
-  screen.set_position(x,x)
+  screen.position((x,x))

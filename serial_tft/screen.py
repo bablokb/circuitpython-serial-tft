@@ -33,11 +33,11 @@ class Screen:
 
     self._t = Transport(uart,reset,baudrate,debug)
     self._text_scale = 2
-    self.set_colors(fg_color,bg_color)
+    self.colors(fg_color,bg_color)
 
   # --- set colors   ---------------------------------------------------------
 
-  def set_colors(self, fg_color=None, bg_color=None):
+  def colors(self, fg_color=None, bg_color=None):
     """ set colors """
     if not bg_color is None:
       self._t.bg_color = [bg_color>>8, bg_color & 0xFF]
@@ -47,27 +47,27 @@ class Screen:
 
   # --- clear screen (fill with bg_color)   ----------------------------------
   
-  def clear(self):
+  def clear(self, color=None):
     """ clear screen """
-    self._t.command(FILL_SCREEN,self._t.bg_color)
+    if color:
+      self._t.bg_color = [color>>8, color & 0xFF]
+    self._t.command(FILL_SCREEN, self._t.bg_color)
 
-  # --- query current cursor position   --------------------------------------
+  # --- query/set current cursor position   ----------------------------------
 
-  def get_position(self):
-    """ query cursor position """
-    (data,rc) = self._t.command(SET_READ_CURSOR)
-    # data four bytes with: xH xL yH yL
-    return (256*int(data[0])+int(data[1]),256*int(data[2])+int(data[3]))
+  def position(self, pos=None):
+    """ query or set cursor position """
+    if pos:
+      x, y = pos
+      self._t.command(SET_READ_CURSOR,[x>>8, x&0xFF, y>>8, y&0xFF])
+    else:
+      (data,rc) = self._t.command(SET_READ_CURSOR)
+      # data four bytes with: xH xL yH yL
+      return (256*int(data[0])+int(data[1]),256*int(data[2])+int(data[3]))
                                 
-  # --- set cursor position   ------------------------------------------------
-
-  def set_position(self, x:int, y:int):
-    """ set cursor position """
-    self._t.command(SET_READ_CURSOR,[x>>8, x&0xFF, y>>8, y&0xFF])
-
   # --- set rotation   -------------------------------------------------------
 
-  def set_rotation(self,rot:int):
+  def rotation(self,rot:int):
     """ set screen rotation """
 
     # map: 0: no rot, 1: 90, 2: 180, 3: 270
@@ -75,26 +75,32 @@ class Screen:
 
   # --- set brightness   -----------------------------------------------------
 
-  def set_brightness(self,b:float):
+  def brightness(self,b:float):
     """ set screen brightness """
 
     # brightness is 0-1
     self._t.command(SET_BACKLIGHT,int(b*255))
 
-  # --- set text size   ------------------------------------------------------
+  # --- set text scale   -----------------------------------------------------
 
-  def set_textsize(self, scale:int):
+  def textscale(self, scale:int):
     """ set textsize """
     self._t.command(SET_TEXTSIZE,scale)
     self._text_scale = scale
 
   # --- get text dimensions   ------------------------------------------------
 
-  def get_textsize(self, text:int):
+  def textsize(self, text:int):
     """ get text dimensions (width,height) """
 
     # for scale==1, charsize is 5x7. Add one pixel between chars for width
     return (self._text_scale*len(text)*5 + (len(text)-1), self._text_scale*7)
+
+  # --- set text color   ------------------------------------------------------
+
+  def textcolor(self, color):
+    """ set text color """
+    self.colors(fg_color=color)
 
   # --- print text at current position   -------------------------------------
 
