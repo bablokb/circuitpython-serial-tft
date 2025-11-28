@@ -39,7 +39,7 @@ minidrv.clear(ser,WHITE)
 print("display initialized")
 
 print("scaling text-size")
-minidrv.textsize(ser,2)
+minidrv.textscale(ser,2)
 minidrv.textcolor(ser,BLACK)
 
 print("sending 'Hello world'")
@@ -51,7 +51,7 @@ print(f"set cursor to {pos}:")
 minidrv.position(ser,pos)
 
 print("scaling text-size")
-minidrv.textsize(ser,4)
+minidrv.textscale(ser,4)
 
 print("sending 'Hello Blinka!'")
 minidrv.textcolor(ser,RED)

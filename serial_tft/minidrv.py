@@ -119,10 +119,10 @@ def text(uart, text):
   """ print text at given position """
   _send_str(uart, b'\x11', text)
 
-# --- set text size   ---------------------------------------------------------
+# --- set text scaling   -----------------------------------------------------
 
-def textsize(uart, scale):
-  """ set textsize """
+def textscale(uart, scale):
+  """ set text scaling """
   cmd = bytearray(b'\x7e\x03\x03\xFF\xef')
   cmd[3] = scale
   _send(uart,cmd)
@@ -130,7 +130,7 @@ def textsize(uart, scale):
 # --- set text size   ---------------------------------------------------------
 
 def textcolor(uart, color):
-  """ set textsize """
+  """ set text color """
   cmd = bytearray(b'\x7e\x04\x02\xFF\xFF\xef')
   cmd[3] = color >> 8
   cmd[4] = color & 0xFF
