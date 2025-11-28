@@ -35,7 +35,7 @@ time.sleep(5)
 print("clear screen")
 minidrv.clear(ser,WHITE)
 #print("set rotation to 0")
-#minidrev.set_rotation(ser,0)
+#minidrev.rotation(ser,0)
 print("display initialized")
 
 print("scaling text-size")
@@ -45,8 +45,9 @@ minidrv.textcolor(ser,BLACK)
 print("sending 'Hello world'")
 minidrv.text(ser,"Hello world")
 
-pos = minidrv.position(ser,None)
-pos = (0,pos[1]+15)               # assume text-size==2: 14 = 2*7
+(tw,th) = minidrv.textsize(ser,"Hello world",2)
+pos = minidrv.position(ser)        # current pos is at top of current line!
+pos = (0,pos[1]+th+1)              # move down by text-height+1
 print(f"set cursor to {pos}:")
 minidrv.position(ser,pos)
 
@@ -58,4 +59,4 @@ minidrv.textcolor(ser,RED)
 minidrv.text(ser,"Hello Blinka!")
 
 time.sleep(5)
-minidrv.set_brightness(ser,0.1)
+minidrv.brightness(ser,0.1)

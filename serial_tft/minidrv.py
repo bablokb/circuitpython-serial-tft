@@ -99,7 +99,7 @@ def clear(uart, color=None):
 
 # --- set brightness   -----------------------------------------------------
 
-def set_brightness(uart,b:float):
+def brightness(uart,b:float):
   """ set screen brightness """
 
   # brightness is 0-1
@@ -127,7 +127,15 @@ def textscale(uart, scale):
   cmd[3] = scale
   _send(uart,cmd)
 
-# --- set text size   ---------------------------------------------------------
+# --- return text size   -----------------------------------------------------
+
+def textsize(uart, text, scale):
+  """ return text size (w,h) for given scaling """
+
+  # for scale==1, charsize is 5x7. Add one pixel between chars for width
+  return (scale*len(text)*5 + (len(text)-1), scale*7)
+
+# --- set text color   -------------------------------------------------------
 
 def textcolor(uart, color):
   """ set text color """
@@ -138,7 +146,7 @@ def textcolor(uart, color):
 
 # --- set cursor position   --------------------------------------------------
 
-def position(uart, pos):
+def position(uart, pos=None):
   """ set cursor position """
   cmd = bytearray(b'\x7e\x02\x01')
   if pos:
