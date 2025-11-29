@@ -107,6 +107,16 @@ def brightness(uart,b:float):
   cmd[3] = int(b*255)
   _send(uart,cmd)
 
+# --- set rotation   -------------------------------------------------------
+
+def rotation(uart,rot:int):
+  """ set screen rotation """
+
+  # map: 0: no rot, 1: 90, 2: 180, 3: 270
+  cmd = bytearray(b'\x7e\x03\x04\xFF\xef')
+  cmd[3] = (rot+90)//90
+  _send(uart,cmd)
+
 # --- draw image   -----------------------------------------------------------
 
 def draw(uart, filename):

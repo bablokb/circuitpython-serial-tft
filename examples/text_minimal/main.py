@@ -34,8 +34,8 @@ time.sleep(5)
 
 print("clear screen")
 minidrv.clear(ser,WHITE)
-#print("set rotation to 0")
-#minidrev.rotation(ser,0)
+print("set rotation to 0")
+minidrv.rotation(ser,0)
 print("display initialized")
 
 print("scaling text-size")
