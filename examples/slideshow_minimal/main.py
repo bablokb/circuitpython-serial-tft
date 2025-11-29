@@ -1,6 +1,8 @@
 # ----------------------------------------------------------------------------
 # Example slideshow using the minimal driver.
 #
+# This example assumes four files (1.bmp, ..., 4.bmp) on the SD-card.
+#
 # Author: Bernhard Bablok
 # License: GPL3
 #
