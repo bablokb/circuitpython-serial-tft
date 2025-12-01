@@ -73,7 +73,7 @@ def _send_str(uart, c, s):
 
 # --- initialize display   ---------------------------------------------------
 
-def init(uart):
+def init(uart, rot=0):
   """ initialize display """
 
   # on POR, wait for the display
@@ -87,6 +87,12 @@ def init(uart):
   if resp not in [b'ok', b'e1']:
     raise RuntimeError("failed")
 
+  # rotate display
+  # map: 0: no rot, 1: 90, 2: 180, 3: 270
+  cmd = bytearray(b'\x7e\x03\x04\xFF\xef')
+  cmd[3] = (rot+90)//90
+  _send(uart,cmd)
+  
 # --- clear screen   ---------------------------------------------------------
 
 def clear(uart, color=None):
@@ -105,16 +111,6 @@ def brightness(uart,b:float):
   # brightness is 0-1
   cmd = bytearray(b'\x7e\x03\x06\xFF\xef')
   cmd[3] = int(b*255)
-  _send(uart,cmd)
-
-# --- set rotation   -------------------------------------------------------
-
-def rotation(uart,rot:int):
-  """ set screen rotation """
-
-  # map: 0: no rot, 1: 90, 2: 180, 3: 270
-  cmd = bytearray(b'\x7e\x03\x04\xFF\xef')
-  cmd[3] = (rot+90)//90
   _send(uart,cmd)
 
 # --- draw image   -----------------------------------------------------------

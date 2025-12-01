@@ -8,6 +8,7 @@
 # ----------------------------------------------------------------------------
 
 import time
+
 try:
   # test native CPython
   import serial
@@ -32,10 +33,10 @@ from serial_tft.colors import RED, BLACK, WHITE
 
 time.sleep(5)
 
+print("init")
+minidrv.init(ser,0)          # rotation: 0
 print("clear screen")
 minidrv.clear(ser,WHITE)
-print("set rotation to 0")
-minidrv.rotation(ser,0)
 print("display initialized")
 
 print("scaling text-size")
