@@ -46,15 +46,6 @@ All examples exist in two versions for the fat and the slim version.
 Notes
 -----
 
-Some settings are sticky across a software reset:
-
-  - rotation
-  - text-size
-  - text-color
-  - brightness
-
-POR (power on reset) will truly reset the display.
-
 The driver does not implement the full API, since some of the API-calls
 don't make sense in the context of Python.
 
